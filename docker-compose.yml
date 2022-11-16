@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+  db-ms-sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: always
+    environment:
+      ACCEPT_EULA: y
+      MSSQL_SA_PASSWORD: SecretP@ssw0rd
+    volumes:
+      - "sql_data:/var/opt/mssql"
+    ports:
+      - "1402:1433"
+
+  maria-db:
+    image: mariadb
+    restart: always
+    volumes:
+      - "mariadb_data:/var/lib/mysql"
+    ports:
+      - "3310:3306"
+    environment:
+      MARIADB_USER: iu_user
+      MARIADB_PASSWORD: iu_passwd
+      MARIADB_DATABASE: iu_database
+      MARIADB_ROOT_PASSWORD: passwd
+
+volumes:
+  mariadb_data:
+  sql_data:
